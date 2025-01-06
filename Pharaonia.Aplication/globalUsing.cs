@@ -1,0 +1,12 @@
+﻿global using Microsoft.Extensions.Options;
+global using Microsoft.EntityFrameworkCore;
+global using System.Net.Mail;
+global using System.Net;
+global using Microsoft.AspNetCore.Http;
+global using Pharaonia.Domain.consts;
+global using Pharaonia.Domain.Interfaces.helpers;
+global using Pharaonia.Domain.Interfaces;
+global using System.Linq.Expressions;
+global using Pharaonia.Domain.DTOs;
+global using Pharaonia.Domain.Interfaces.IGenericRepository___IUOW;
+global using Pharaonia.Domain.Models;

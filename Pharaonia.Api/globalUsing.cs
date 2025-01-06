@@ -1,0 +1,16 @@
+﻿global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using System.Text;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Mvc;
+global using Pharaonia.Domain.Interfaces;
+global using Pharaonia.Aplication.Services;
+global using Pharaonia.Aplication.Services.helpers;
+global using Pharaonia.Domain.consts;
+global using Pharaonia.Domain.Interfaces.helpers;
+global using Pharaonia.Infrastructure.Data;
+global using Pharaonia.Infrastructure.GenericRepository___UOW;
+global using Pharaonia.Domain.Interfaces.IGenericRepository___IUOW;
+global using Pharaonia.API.Extentions;

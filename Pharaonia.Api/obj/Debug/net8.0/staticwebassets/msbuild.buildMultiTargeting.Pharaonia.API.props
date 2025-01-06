@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Pharaonia.API.props" />
+</Project>

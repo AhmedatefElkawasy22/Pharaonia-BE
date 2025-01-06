@@ -1,0 +1,15 @@
+D:\VS file\Pharaonia\Pharaonia.Domain\bin\Debug\net8.0\Pharaonia.Domain.deps.json
+D:\VS file\Pharaonia\Pharaonia.Domain\bin\Debug\net8.0\Pharaonia.Domain.runtimeconfig.json
+D:\VS file\Pharaonia\Pharaonia.Domain\bin\Debug\net8.0\Pharaonia.Domain.dll
+D:\VS file\Pharaonia\Pharaonia.Domain\bin\Debug\net8.0\Pharaonia.Domain.pdb
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.csproj.AssemblyReference.cache
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.AssemblyInfoInputs.cache
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.AssemblyInfo.cs
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.csproj.CoreCompileInputs.cache
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.sourcelink.json
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.dll
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\refint\Pharaonia.Domain.dll
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.pdb
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\Pharaonia.Domain.genruntimeconfig.cache
+D:\VS file\Pharaonia\Pharaonia.Domain\obj\Debug\net8.0\ref\Pharaonia.Domain.dll
