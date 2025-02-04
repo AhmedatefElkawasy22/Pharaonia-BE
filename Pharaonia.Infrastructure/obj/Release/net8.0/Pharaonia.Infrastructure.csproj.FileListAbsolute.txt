@@ -1,0 +1,16 @@
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\bin\Release\net8.0\Pharaonia.Infrastructure.deps.json
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\bin\Release\net8.0\Pharaonia.Infrastructure.dll
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\bin\Release\net8.0\Pharaonia.Infrastructure.pdb
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\bin\Release\net8.0\Pharaonia.Domain.dll
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\bin\Release\net8.0\Pharaonia.Domain.pdb
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.csproj.AssemblyReference.cache
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.AssemblyInfoInputs.cache
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.AssemblyInfo.cs
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.csproj.CoreCompileInputs.cache
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.sourcelink.json
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaoni.DD8A999D.Up2Date
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.dll
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\refint\Pharaonia.Infrastructure.dll
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\Pharaonia.Infrastructure.pdb
+D:\VS file\Pharaonia\Pharaonia.Infrastructure\obj\Release\net8.0\ref\Pharaonia.Infrastructure.dll

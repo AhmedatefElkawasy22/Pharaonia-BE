@@ -14,3 +14,7 @@ global using Pharaonia.Infrastructure.Data;
 global using Pharaonia.Infrastructure.GenericRepository___UOW;
 global using Pharaonia.Domain.Interfaces.IGenericRepository___IUOW;
 global using Pharaonia.API.Extentions;
+global using Pharaonia.Domain.DTOs;
+global using Pharaonia.Domain.Models;
+global using Microsoft.AspNetCore.Authorization;
+

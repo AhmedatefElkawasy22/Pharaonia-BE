@@ -1,7 +1,7 @@
 ﻿
 namespace Pharaonia.Domain.Interfaces
 {
-    public interface IOfferService 
+    public interface IOfferService
     {
         Task<List<GetOfferDTO>> GetAllOffersAsync();
         Task<GetOfferDTO?> GetOfferByIdAsync(int OfferID);
@@ -16,5 +16,11 @@ namespace Pharaonia.Domain.Interfaces
         Task<ResponseModel> UpdateImagesOfOfferAsync(int OfferID, List<IFormFile> images);
         Task<ResponseModel> DeleteImageFromOfferAsync(int ImageID);
         Task<ResponseModel> DeleteAllImageFromOfferAsync(int OfferID);
+        //book offers
+        Task<ResponseModel> AddBookOfferAsync(AddBookOfferDTO model, int offerID);
+        Task<List<GetBookOfferDTO>?> GetAllBookingsAsync();
+        Task<List<GetBookOfferDTO>?> GetAllBookingsByOfferIdAsync(int OfferID);
+        Task<GetBookOfferDTO?> GetBookOfferByIDAsync(int BookOfferID);
+
     }
 }

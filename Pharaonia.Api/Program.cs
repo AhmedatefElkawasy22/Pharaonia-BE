@@ -17,5 +17,16 @@ builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
 app.ConfigureMiddlewarePipeline();
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    await DataSeeder.SeedAdminUser(serviceProvider);
+}
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    await DataSeeder.SeedAdminUser(serviceProvider);
+}
+
 
 app.Run();

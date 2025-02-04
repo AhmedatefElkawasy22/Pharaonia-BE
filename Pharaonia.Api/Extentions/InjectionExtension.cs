@@ -11,6 +11,9 @@
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<IGalleryService, GalleryService>();
             services.AddScoped<IAboutUsService, AboutUsService>();
+            services.AddScoped<IContactUsService, ContactUsService>();
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddHttpContextAccessor();
         }
     }

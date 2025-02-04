@@ -1,6 +1,7 @@
 ﻿using Pharaonia.Domain.DTOs;
 using Pharaonia.Domain.Models;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Pharaonia.Aplication.Services
 {
@@ -8,11 +9,13 @@ namespace Pharaonia.Aplication.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUrlHelperService _urlHelperService;
+        private readonly IEmailSender _emailSender;
 
-        public OfferService(IUnitOfWork unitOfWork, IUrlHelperService urlHelperService)
+        public OfferService(IUnitOfWork unitOfWork, IUrlHelperService urlHelperService, IEmailSender emailSender)
         {
             _unitOfWork = unitOfWork;
             _urlHelperService = urlHelperService;
+            _emailSender = emailSender;
         }
 
         public async Task<List<GetOfferDTO>> GetAllOffersAsync()
@@ -383,6 +386,200 @@ namespace Pharaonia.Aplication.Services
                 return new ResponseModel { StatusCode = 500, Message = $"An error occurred while adding images: {ex.Message}" };
             }
 
+        }
+
+
+        // Book Offer
+        public async Task<ResponseModel> AddBookOfferAsync(AddBookOfferDTO model, int offerID)
+        {
+            try
+            {
+                var bookOffer = new BookOffer
+                {
+                    Name = model.Name,
+                    ArrivalDate = model.ArrivalDate,
+                    CreatedTime = DateTime.Now,
+                    DepartureDate = model.DepartureDate,
+                    Email = model.Email,
+                    Nationality = model.Nationality,
+                    NumberOfAllPeople = model.NumberOfAllPeople,
+                    NumberOfChildren = model.NumberOfChildren,
+                    OfferId = offerID,
+                    PhoneNumber = model.PhoneNumber,
+                    Requirements = model.Requirements
+                };
+                await _unitOfWork.BookOffer.AddAsync(bookOffer);
+                await _unitOfWork.SaveChangesAsync();
+                try
+                {
+                    var emailSubject = "New Book Offer Notification";
+                    var emailBody = GenerateBookOfferEmailBody(bookOffer);
+                    //send email to admin
+                    await _emailSender.SendEmailAsync("elkawasyahmed@gmail.com", emailSubject, emailBody);
+                    //send email to user 
+                    await _emailSender.SendEmailAsync( bookOffer.Email,"Booking Confirmation - Pharaonia", GenerateBookingConfirmationEmailBody(bookOffer));
+                }
+                catch (Exception ex)
+                {
+                    return new ResponseModel
+                    {
+                        StatusCode = 500,
+                        Message = $"An error occurred while sending the email: {ex.Message}"
+                    };
+                }
+                return new ResponseModel
+                {
+                    Message = "Book offer has been Added successfully.",
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = 500,
+                    Message = $"An error occurred while Added Book Offer : {ex.Message}"
+                };
+            }
+        }
+        public async Task<List<GetBookOfferDTO>?> GetAllBookingsAsync()
+        {
+            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
+            var data = await _unitOfWork.BookOffer.GetAllAsync(includes);
+            if (data == null || !data.Any())
+                return null;
+
+            return data.Select(b => new GetBookOfferDTO
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Email = b.Email,
+                Nationality = b.Nationality,
+                PhoneNumber = b.PhoneNumber,
+                ArrivalDate = b.ArrivalDate,
+                DepartureDate = b.DepartureDate,
+                NumberOfAllPeople = b.NumberOfAllPeople,
+                NumberOfChildren = b.NumberOfChildren,
+                Requirements = b.Requirements,
+                CreatedTime = b.CreatedTime,
+                Offer = b.Offer
+            }).ToList();
+        }
+        public async Task<List<GetBookOfferDTO>?> GetAllBookingsByOfferIdAsync(int OfferID)
+        {
+            Expression<Func<BookOffer, bool>> match = b => b.OfferId == OfferID;
+            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
+            var data = await _unitOfWork.BookOffer.GetAllAsync(includes, match);
+            if (data == null || !data.Any())
+                return null;
+
+            return data.Select(b => new GetBookOfferDTO
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Email = b.Email,
+                Nationality = b.Nationality,
+                PhoneNumber = b.PhoneNumber,
+                ArrivalDate = b.ArrivalDate,
+                DepartureDate = b.DepartureDate,
+                NumberOfAllPeople = b.NumberOfAllPeople,
+                NumberOfChildren = b.NumberOfChildren,
+                Requirements = b.Requirements,
+                CreatedTime = b.CreatedTime,
+                Offer = b.Offer
+            }).ToList();
+        }
+        public async Task<GetBookOfferDTO?> GetBookOfferByIDAsync(int BookOfferID)
+        {
+            Expression<Func<BookOffer, bool>> match = b => b.Id == BookOfferID;
+            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
+            var data = await _unitOfWork.BookOffer.GetOneAsync(match, includes);
+            if (data == null)
+                return null;
+
+            return new GetBookOfferDTO
+            {
+                Id = data.Id,
+                Name = data.Name,
+                Email = data.Email,
+                Nationality = data.Nationality,
+                PhoneNumber = data.PhoneNumber,
+                ArrivalDate = data.ArrivalDate,
+                DepartureDate = data.DepartureDate,
+                NumberOfAllPeople = data.NumberOfAllPeople,
+                NumberOfChildren = data.NumberOfChildren,
+                Requirements = data.Requirements,
+                CreatedTime = data.CreatedTime,
+                Offer = data.Offer
+            };
+        }
+        private string GenerateBookOfferEmailBody(BookOffer bookOffer)
+        {
+            return $@"
+        <div style='font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;'>
+            <div style='max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>
+                <div style='padding: 20px; text-align: center; background: #4caf50; color: #ffffff;'>
+                    <h1 style='margin: 0; font-size: 24px; animation: fadeIn 1s;'>🎉 New Book Offer Received! 🎉</h1>
+                </div>
+                <div style='padding: 20px; line-height: 1.6;'>
+                    <p style='font-size: 18px; color: #555;'><strong>Name:</strong> <span style='color: #333;'>{bookOffer.Name}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Email:</strong> <span style='color: #333;'>{bookOffer.Email}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Nationality:</strong> <span style='color: #333;'>{bookOffer.Nationality}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Phone Number:</strong> <span style='color: #333;'>{bookOffer.PhoneNumber}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Arrival Date:</strong> <span style='color: #333;'>{bookOffer.ArrivalDate:yyyy-MM-dd}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Departure Date:</strong> <span style='color: #333;'>{bookOffer.DepartureDate:yyyy-MM-dd}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Number of People:</strong> <span style='color: #333;'>{bookOffer.NumberOfAllPeople}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Number of Children:</strong> <span style='color: #333;'>{bookOffer.NumberOfChildren}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Requirements:</strong></p>
+                    <p style='background: #f9f9f9; border-left: 4px solid #4caf50; padding: 10px; font-size: 16px; color: #666;'>{bookOffer.Requirements}</p>
+                    <p style='font-size: 18px; color: #555;'><strong>offer booking time:</strong> <span style='color: #333;'>{bookOffer.CreatedTime:yyyy-MM-dd HH:mm}</span></p>
+                </div>
+                <div style='padding: 10px; text-align: center; background: #4caf50; color: #ffffff; font-size: 14px;'>
+                    <p style='margin: 0;'>Thank you for using our service!</p>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes fadeIn {{
+                0% {{ opacity: 0; }}
+                100% {{ opacity: 1; }}
+            }}
+        </style>
+    ";
+        }
+        private string GenerateBookingConfirmationEmailBody(BookOffer bookOffer)
+        {
+            return $@"
+        <div style='font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;'>
+            <div style='max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);'>
+                <div style='padding: 20px; text-align: center; background: #1e90ff; color: #ffffff;'>
+                    <h1 style='margin: 0; font-size: 24px; animation: fadeIn 1s;'>🎉 Thank You for Booking with Pharaonia! 🎉</h1>
+                </div>
+                <div style='padding: 20px; line-height: 1.6;'>
+                    <p style='font-size: 18px; color: #333;'>Dear <strong>{bookOffer.Name}</strong>,</p>
+                    <p style='font-size: 18px; color: #555;'>We are thrilled to confirm your booking! One of our representatives will contact you shortly to assist you further.</p>
+                    <p style='font-size: 18px; color: #555;'>Here are the details of your booking:</p>
+                    <ul style='background: #f9f9f9; padding: 10px; border-radius: 5px; border: 1px solid #ddd;'>
+                        <li style='font-size: 16px; color: #555;'>Arrival Date: <span style='color: #333;'>{bookOffer.ArrivalDate:yyyy-MM-dd}</span></li>
+                        <li style='font-size: 16px; color: #555;'>Departure Date: <span style='color: #333;'>{bookOffer.DepartureDate:yyyy-MM-dd}</span></li>
+                        <li style='font-size: 16px; color: #555;'>Number of People: <span style='color: #333;'>{bookOffer.NumberOfAllPeople}</span></li>
+                        <li style='font-size: 16px; color: #555;'>Number of Children: <span style='color: #333;'>{bookOffer.NumberOfChildren}</span></li>
+                    </ul>
+                    <p style='font-size: 18px; color: #555;'>If you have any questions or need further assistance, feel free to contact us.</p>
+                    <p style='font-size: 18px; color: #333;'>Thank you for choosing <strong>Pharaonia</strong>!</p>
+                </div>
+                <div style='padding: 10px; text-align: center; background: #1e90ff; color: #ffffff; font-size: 14px;'>
+                    <p style='margin: 0;'>We look forward to serving you!</p>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes fadeIn {{
+                0% {{ opacity: 0; }}
+                100% {{ opacity: 1; }}
+            }}
+        </style>
+    ";
         }
 
     }

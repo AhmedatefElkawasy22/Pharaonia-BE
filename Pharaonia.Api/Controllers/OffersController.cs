@@ -1,9 +1,7 @@
 ﻿
-using Pharaonia.Domain.DTOs;
-
 namespace Pharaonia.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin"), Route("api/[controller]")]
     [ApiController]
     public class OffersController : ControllerBase
     {
@@ -20,12 +18,12 @@ namespace Pharaonia.Controllers
         {
             var offers = await _offerService.GetAllOffersAsync();
             if (offers == null)
-                 return NotFound();
+                return NotFound();
             return Ok(offers);
         }
 
 
-        [HttpGet("/Get-All-Offers-Available")]
+        [AllowAnonymous,HttpGet("/Get-All-Offers-Available")]
         public async Task<IActionResult> GetAvailableOffersAsync()
         {
             var offers = await _offerService.GetAvailableOffersAsync();
@@ -36,7 +34,7 @@ namespace Pharaonia.Controllers
 
 
         [HttpGet("/Get-Images-Of-Offer/{OfferId:int}")]
-        public async Task<IActionResult> GetImagesOfOfferAsync([FromRoute]int OfferId)
+        public async Task<IActionResult> GetImagesOfOfferAsync([FromRoute] int OfferId)
         {
             var res = await _offerService.GetImagesOfOfferAsync(OfferId);
             if (res == null)
@@ -45,10 +43,10 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpGet("/Get-Offer-By-Id/{OfferId:int}")]
-        public async Task<IActionResult> GetOfferByIdAsync([FromRoute]int OfferId)
+        [AllowAnonymous, HttpGet("/Get-Offer-By-Id/{OfferId:int}")]
+        public async Task<IActionResult> GetOfferByIdAsync([FromRoute] int OfferId)
         {
-            var offer =await _offerService.GetOfferByIdAsync(OfferId);
+            var offer = await _offerService.GetOfferByIdAsync(OfferId);
             if (offer == null)
                 return BadRequest("Offer Not Exist.");
             return Ok(offer);
@@ -85,7 +83,7 @@ namespace Pharaonia.Controllers
 
 
         [HttpPost("/Add-Images-To-Offer/{offerId:int}")]
-        public async Task<IActionResult> AddImagesToOfferAsync([FromRoute]int offerId, List<IFormFile> images)
+        public async Task<IActionResult> AddImagesToOfferAsync([FromRoute] int offerId, List<IFormFile> images)
         {
             if (offerId <= 0)
                 return BadRequest("Invalid offer ID.");
@@ -107,7 +105,7 @@ namespace Pharaonia.Controllers
 
 
         [HttpPost("/Add-offer")]
-        public async Task<IActionResult> AddOfferAsync([FromForm]AddOfferDTO model)
+        public async Task<IActionResult> AddOfferAsync([FromForm] AddOfferDTO model)
         {
             if (!ModelState.IsValid) return BadRequest("please enter a valid Data.");
 
@@ -125,7 +123,7 @@ namespace Pharaonia.Controllers
 
 
         [HttpPut("/Update-Offer/{OfferId:int}")]
-        public async Task<IActionResult> UpdateOfferAsync([FromRoute]int OfferId, [FromBody]UpdateOfferDTO model)
+        public async Task<IActionResult> UpdateOfferAsync([FromRoute] int OfferId, [FromBody] UpdateOfferDTO model)
         {
             if (!ModelState.IsValid)
                 return BadRequest("please enter a valid Data.");
@@ -151,7 +149,7 @@ namespace Pharaonia.Controllers
             if (images == null || images.Count == 0 || !images.Any())
                 return BadRequest("No images found, please enter at least one image.");
 
-            var response = await _offerService.UpdateImagesOfOfferAsync(offerId,images);
+            var response = await _offerService.UpdateImagesOfOfferAsync(offerId, images);
 
             return response.StatusCode switch
             {
@@ -165,12 +163,12 @@ namespace Pharaonia.Controllers
 
 
         [HttpDelete("/Delete-Image-From-Offer/{ImageId:int}")]
-        public  async Task<IActionResult> DeleteImageFromOfferAsync([FromRoute] int ImageId)
+        public async Task<IActionResult> DeleteImageFromOfferAsync([FromRoute] int ImageId)
         {
             if (ImageId <= 0)
                 return BadRequest("Invalid offer ID.");
 
-            var response =await _offerService.DeleteImageFromOfferAsync(ImageId);
+            var response = await _offerService.DeleteImageFromOfferAsync(ImageId);
             return response.StatusCode switch
             {
                 206 => StatusCode(206, response.Message),
@@ -209,6 +207,60 @@ namespace Pharaonia.Controllers
 
             var response = await _offerService.DeleteOfferAsync(offerId);
 
+            return response.StatusCode switch
+            {
+                206 => StatusCode(206, response.Message),
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
+
+
+        // Book offer
+        [HttpGet("Get-All-Bookings")]
+        public async Task<IActionResult> GetAllBookingsAsync()
+        {
+            var res = await _offerService.GetAllBookingsAsync();
+            if (res == null || !res.Any())
+                return NotFound();
+            return Ok(res);
+        }
+
+
+        [HttpGet("Get-All-Bookings-By-OfferId/{OfferId:int}")]
+        public async Task<IActionResult> GetAllBookingsByOfferIdAsync([FromRoute] int OfferId)
+        {
+            if (OfferId <= 0)
+                return BadRequest("Invalid offer ID.");
+            var res = await _offerService.GetAllBookingsByOfferIdAsync(OfferId);
+            if (res == null || !res.Any())
+                return NotFound();
+            return Ok(res);
+        }
+
+
+        [HttpGet("Get-Book-Offer-By-ID/{Id:int}")]
+        public async Task<IActionResult> GetBookOfferByIDAsync([FromRoute] int Id)
+        {
+            if (Id <= 0)
+                return BadRequest("Invalid ID.");
+            var res = await _offerService.GetBookOfferByIDAsync(Id);
+            if (res == null)
+                return NotFound();
+            return Ok(res);
+        }
+
+
+        [AllowAnonymous, HttpPost("Add-Book-Offer/{OfferId:int}")]
+        public async Task<IActionResult> AddBookOfferAsync([FromRoute] int OfferId, [FromBody] AddBookOfferDTO model)
+        {
+            if (OfferId <= 0)
+                return BadRequest("Invalid offer ID.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var response = await _offerService.AddBookOfferAsync(model, OfferId);
             return response.StatusCode switch
             {
                 206 => StatusCode(206, response.Message),

@@ -1,10 +1,7 @@
 ﻿
-using Pharaonia.Domain.DTOs;
-using Pharaonia.Domain.Models;
-
 namespace Pharaonia.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin"), Route("api/[controller]")]
     [ApiController]
     public class DestinationController : ControllerBase
     {
@@ -15,7 +12,7 @@ namespace Pharaonia.Controllers
             _destinationService = destinationService;
         }
 
-        [HttpGet("/Get-All-Destinations")]
+        [AllowAnonymous, HttpGet("/Get-All-Destinations")]
         public async Task<IActionResult> GetAllAsync() 
         { 
           List<GetDestinationDTO> Response = await _destinationService.GetAllAsync();
@@ -25,18 +22,18 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpGet("/Get-Destination-By-Id")]
-        public  async Task<IActionResult> GetByIdAsync(int id)
+        [AllowAnonymous, HttpGet("/Get-Destination-By-Id/{DestinationID:int}")]
+        public  async Task<IActionResult> GetByIdAsync([FromRoute]int DestinationID)
         {
-            GetDestinationDTO? Response =await _destinationService.GetByIdAsync(id);
+            GetDestinationDTO? Response =await _destinationService.GetByIdAsync(DestinationID);
             if (Response == null)
                 return BadRequest("enter a valid ID.");
             return Ok(Response);
         }
 
 
-        [HttpGet("/Get-Destinations-Based-On-Category")]
-        public  async Task<IActionResult> GetBasedOnCategoryAsync(Category category)
+        [AllowAnonymous, HttpGet("/Get-Destinations-Based-On-Category")]
+        public  async Task<IActionResult> GetBasedOnCategoryAsync([FromBody]Category category)
         {
             List<GetDestinationDTO> Response =await _destinationService.GetBasedOnCategoryAsync(category);
             return Ok(Response);

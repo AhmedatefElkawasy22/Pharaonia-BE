@@ -8,6 +8,8 @@
         public IGenericRepository<OfferImages> OfferImages {  get; }
         public IGenericRepository<Gallery> Gallery { get; }
         public IGenericRepository<AboutUs> AboutUs { get; }
+        public IGenericRepository<ContactUS> ContactUS { get; }
+        public IGenericRepository<BookOffer> BookOffer { get; }
         Task<bool> SaveChangesAsync();
         bool SaveChanges();
 

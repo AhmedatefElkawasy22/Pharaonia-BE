@@ -10,3 +10,10 @@ global using System.Linq.Expressions;
 global using Pharaonia.Domain.DTOs;
 global using Pharaonia.Domain.Interfaces.IGenericRepository___IUOW;
 global using Pharaonia.Domain.Models;
+global using System.IdentityModel.Tokens.Jwt;
+global using Pharaonia.Infrastructure.Data;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.IdentityModel.Tokens;
+global using System.Security.Claims;
+global using System.Text;
+

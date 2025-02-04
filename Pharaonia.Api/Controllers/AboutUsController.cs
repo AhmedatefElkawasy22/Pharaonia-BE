@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Pharaonia.Domain.DTOs;
-using Pharaonia.Domain.Models;
+﻿
+
+using System.Data;
 
 namespace Pharaonia.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin"), Route("api/[controller]")]
     [ApiController]
     public class AboutUsController : ControllerBase
     {
@@ -16,17 +15,22 @@ namespace Pharaonia.API.Controllers
             _aboutUsService = aboutUsService;
         }
 
-        [HttpGet("/Get-AboutUS")]
+        [AllowAnonymous,HttpGet("/Get-AboutUS")]
         public async Task<IActionResult> GetAboutUsAsync()
         {
             var data = await _aboutUsService.GetAboutUsAsync();
-              if (string.IsNullOrEmpty(data)) 
+            if (string.IsNullOrEmpty(data))
                 return NotFound();
             return Ok(data);
         }
+
+
         [HttpPost("/Add-AboutUs")]
-        public async Task<IActionResult> AddAboutUsAsync([FromBody]AboutUsDTO model)
+        public async Task<IActionResult> AddAboutUsAsync([FromBody] AboutUsDTO model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var response = await _aboutUsService.AddAboutUsAsync(model);
 
             return response.StatusCode switch
@@ -38,9 +42,14 @@ namespace Pharaonia.API.Controllers
                 _ => StatusCode(500, "An unexpected error occurred, please try again."),
             };
         }
+
+
         [HttpPost("/update-AboutUs")]
         public async Task<IActionResult> UpdateAboutUsAsync([FromBody] AboutUsDTO model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var response = await _aboutUsService.UpdateAboutUsAsync(model);
 
             return response.StatusCode switch
@@ -52,6 +61,7 @@ namespace Pharaonia.API.Controllers
                 _ => StatusCode(500, "An unexpected error occurred, please try again."),
             };
         }
+
 
         [HttpPost("/Delete-AboutUs")]
         public async Task<IActionResult> DeleteAboutUsAsync()

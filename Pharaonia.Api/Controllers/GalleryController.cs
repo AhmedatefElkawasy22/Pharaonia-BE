@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace Pharaonia.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize(Roles = "Admin"), Route("api/[controller]")]
     [ApiController]
     public class GalleryController : ControllerBase
     {
@@ -14,20 +12,24 @@ namespace Pharaonia.API.Controllers
             _galleryService = galleryService;
         }
 
-        [HttpGet("/Get-All")]
+        [AllowAnonymous, HttpGet("/Get-All")]
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _galleryService.GetAllAsync());
         }
-        [HttpGet("/Get-By-Id/{Id:int}")]
+
+
+        [AllowAnonymous,HttpGet("/Get-By-Id/{Id:int}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int Id)
         {
             var Image = await _galleryService.GetByIdAsync(Id);
-            if (Image == null) 
+            if (Image == null)
                 return NotFound("Image Not Found.");
 
             return Ok(Image);
         }
+
+
         [HttpPost("Add-Images")]
         public async Task<IActionResult> AddImagesAsync([FromForm] List<IFormFile> images)
         {
@@ -42,6 +44,8 @@ namespace Pharaonia.API.Controllers
                 _ => StatusCode(500, "An unexpected error occurred, please try again."),
             };
         }
+
+
         [HttpDelete("Delete-Image/{Id:int}")]
         public async Task<IActionResult> DeleteImageAsync([FromRoute] int Id)
         {
@@ -55,6 +59,8 @@ namespace Pharaonia.API.Controllers
                 _ => StatusCode(500, "An unexpected error occurred, please try again."),
             };
         }
+
+
         [HttpDelete("Delete-All-Images")]
         public async Task<IActionResult> DeleteAllImagesAsync()
         {

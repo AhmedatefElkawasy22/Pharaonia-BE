@@ -3,29 +3,31 @@
   "WorkspaceRootPath": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{35F54D90-7A59-45E4-AE58-ABCB9BFE8C52}|..\\Pharaonia.Aplication\\Pharaonia.Aplication.csproj|d:\\vs file\\pharaonia\\pharaonia.aplication\\services\\aboutusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\controllers\\destinationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:controllers\\destinationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\controllers\\aboutuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:controllers\\aboutuscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{35F54D90-7A59-45E4-AE58-ABCB9BFE8C52}|..\\Pharaonia.Aplication\\Pharaonia.Aplication.csproj|d:\\vs file\\pharaonia\\pharaonia.aplication\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{487B1881-BC02-47C5-98D6-FB1A72BFA8C7}|..\\Pharaonia.Domain\\Pharaonia.Domain.csproj|d:\\vs file\\pharaonia\\pharaonia.domain\\interfaces\\iaboutusservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\extentions\\dbcontextextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:extentions\\dbcontextextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A7D44EF8-1327-40D8-B2FB-6EDAD6371AFE}|..\\Pharaonia.Infrastructure\\Pharaonia.Infrastructure.csproj|d:\\vs file\\pharaonia\\pharaonia.infrastructure\\genericrepository \u0026 uow\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{487B1881-BC02-47C5-98D6-FB1A72BFA8C7}|..\\Pharaonia.Domain\\Pharaonia.Domain.csproj|d:\\vs file\\pharaonia\\pharaonia.domain\\interfaces\\igenericrepository \u0026 iuow\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A7D44EF8-1327-40D8-B2FB-6EDAD6371AFE}|..\\Pharaonia.Infrastructure\\Pharaonia.Infrastructure.csproj|d:\\vs file\\pharaonia\\pharaonia.infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\extentions\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:extentions\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DESKTOP_53M1Q49/Phoraonia/ITIStud/SqlTable/dbo.aboutUs.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{487B1881-BC02-47C5-98D6-FB1A72BFA8C7}|..\\Pharaonia.Domain\\Pharaonia.Domain.csproj|d:\\vs file\\pharaonia\\pharaonia.domain\\models\\aboutus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|d:\\vs file\\pharaonia\\pharaonia.api\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9892F157-1EED-4728-AF10-B37DE1358515}|Pharaonia.API.csproj|solutionrelative:controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,107 +37,91 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GenericRepository.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Infrastructure\\GenericRepository \u0026 UOW\\GenericRepository.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Infrastructure\\GenericRepository \u0026 UOW\\GenericRepository.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Infrastructure\\GenericRepository \u0026 UOW\\GenericRepository.cs",
-              "RelativeToolTip": "..\\Pharaonia.Infrastructure\\GenericRepository \u0026 UOW\\GenericRepository.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAowCwAAAA1AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "DbContextExtension.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Extentions\\DbContextExtension.cs",
+              "RelativeDocumentMoniker": "Extentions\\DbContextExtension.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Extentions\\DbContextExtension.cs",
+              "RelativeToolTip": "Extentions\\DbContextExtension.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:54:06.498Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-03T00:18:52.576Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-03T00:16:43.488Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "IGenericRepository.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Interfaces\\IGenericRepository \u0026 IUOW\\IGenericRepository.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Domain\\Interfaces\\IGenericRepository \u0026 IUOW\\IGenericRepository.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Interfaces\\IGenericRepository \u0026 IUOW\\IGenericRepository.cs",
-              "RelativeToolTip": "..\\Pharaonia.Domain\\Interfaces\\IGenericRepository \u0026 IUOW\\IGenericRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABDAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:53:22.704Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "dbo.aboutUs [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/DESKTOP_53M1Q49/Phoraonia/ITIStud/SqlTable/dbo.aboutUs.sql",
-              "ToolTip": "dbo.aboutUs [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002897|",
-              "WhenOpened": "2025-01-06T19:52:22.461Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Infrastructure\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Infrastructure\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Infrastructure\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "..\\Pharaonia.Infrastructure\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA0wBoAAAA3AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:45:42.678Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AboutUsService.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Aplication\\Services\\AboutUsService.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Aplication\\Services\\AboutUsService.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Aplication\\Services\\AboutUsService.cs",
-              "RelativeToolTip": "..\\Pharaonia.Aplication\\Services\\AboutUsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T17:56:49.597Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IAboutUsService.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Interfaces\\IAboutUsService.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Domain\\Interfaces\\IAboutUsService.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Interfaces\\IAboutUsService.cs",
-              "RelativeToolTip": "..\\Pharaonia.Domain\\Interfaces\\IAboutUsService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T17:56:18.202Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-02T00:35:18.589Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AboutUsController.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\AboutUsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AboutUsController.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\AboutUsController.cs",
-              "RelativeToolTip": "Controllers\\AboutUsController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAcAAAAAAAAAA==",
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Aplication\\Services\\AccountService.cs",
+              "RelativeDocumentMoniker": "..\\Pharaonia.Aplication\\Services\\AccountService.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Aplication\\Services\\AccountService.cs",
+              "RelativeToolTip": "..\\Pharaonia.Aplication\\Services\\AccountService.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAA1wNEAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T17:53:49.287Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-02T00:06:55.258Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AboutUs.cs",
-              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Models\\AboutUs.cs",
-              "RelativeDocumentMoniker": "..\\Pharaonia.Domain\\Models\\AboutUs.cs",
-              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Domain\\Models\\AboutUs.cs",
-              "RelativeToolTip": "..\\Pharaonia.Domain\\Models\\AboutUs.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "DataSeeder.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Extentions\\DataSeeder.cs",
+              "RelativeDocumentMoniker": "Extentions\\DataSeeder.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Extentions\\DataSeeder.cs",
+              "RelativeToolTip": "Extentions\\DataSeeder.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwBkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T17:52:39.958Z",
+              "WhenOpened": "2025-02-02T00:13:50.482Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAgwDAAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T18:18:04.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DestinationController.cs",
+              "DocumentMoniker": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\DestinationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DestinationController.cs",
+              "ToolTip": "D:\\VS file\\Pharaonia\\Pharaonia.Api\\Controllers\\DestinationController.cs",
+              "RelativeToolTip": "Controllers\\DestinationController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T16:27:12.321Z",
               "EditorCaption": ""
             }
           ]

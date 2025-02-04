@@ -6,13 +6,13 @@ namespace Pharaonia.Infrastructure.Data
         public ApplicationDbContext() { }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Destination> destinations { get; set; }
-        public DbSet<Offer> offers { get; set; }
-        public DbSet<DestinationImages> destinationIamges { get; set; }
-        public DbSet<ContactUS> contactUS { get; set; }
-        public DbSet<AboutUs> aboutUs { get; set; }
-        public DbSet<GetOffer> getOffer { get; set; }
-        public DbSet<Gallery> gallery { get; set; }
+        public DbSet<Destination> Destinations { get; set; }
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<DestinationImages> DestinationIamges { get; set; }
+        public DbSet<ContactUS> ContactUS { get; set; }
+        public DbSet<AboutUs> AboutUs { get; set; }
+        public DbSet<BookOffer> BookOffer { get; set; }
+        public DbSet<Gallery> Gallery { get; set; }
         public DbSet<OfferImages> OfferImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

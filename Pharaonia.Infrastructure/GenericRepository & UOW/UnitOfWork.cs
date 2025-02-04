@@ -12,6 +12,9 @@ namespace Pharaonia.Infrastructure.GenericRepository___UOW
         public IGenericRepository<OfferImages> OfferImages { get; }
         public IGenericRepository<Gallery> Gallery { get; }
         public IGenericRepository<AboutUs> AboutUs { get; }
+        public IGenericRepository<ContactUS> ContactUS { get; }
+        public IGenericRepository<BookOffer> BookOffer { get; }
+
 
 
 
@@ -26,6 +29,8 @@ namespace Pharaonia.Infrastructure.GenericRepository___UOW
             OfferImages = new GenericRepository<OfferImages>(_context);
             Gallery = new GenericRepository<Gallery>(_context);
             AboutUs = new GenericRepository<AboutUs>(_context);
+            ContactUS = new GenericRepository<ContactUS>(_context);
+            BookOffer = new GenericRepository<BookOffer>(_context);
         }
 
         public async Task<bool> SaveChangesAsync()
