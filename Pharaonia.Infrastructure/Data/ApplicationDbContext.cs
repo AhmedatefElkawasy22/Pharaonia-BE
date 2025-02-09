@@ -25,6 +25,8 @@ namespace Pharaonia.Infrastructure.Data
             });
 
             builder.Entity<AboutUs>().HasKey(x => x.Id);
+            builder.Entity<User>().Property(x => x.OTPResetPassword).HasDefaultValue(null);
+            builder.Entity<User>().Property(x => x.OTPResetPasswordExpiration).HasDefaultValue(null);
 
             base.OnModelCreating(builder);
         }

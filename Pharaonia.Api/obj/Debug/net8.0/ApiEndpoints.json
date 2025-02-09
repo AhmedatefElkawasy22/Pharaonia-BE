@@ -326,7 +326,7 @@
   {
     "ContainingType": "Pharaonia.Controllers.DestinationController",
     "Method": "DeleteDestinationAsync",
-    "RelativePath": "Delete-Destination{DestinationID}",
+    "RelativePath": "Delete-Destination/{DestinationID}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -466,15 +466,15 @@
   {
     "ContainingType": "Pharaonia.Controllers.DestinationController",
     "Method": "GetByIdAsync",
-    "RelativePath": "Get-Destination-By-Id",
+    "RelativePath": "Get-Destination-By-Id/{DestinationID}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "DestinationID",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -482,15 +482,15 @@
   {
     "ContainingType": "Pharaonia.Controllers.DestinationController",
     "Method": "GetBasedOnCategoryAsync",
-    "RelativePath": "Get-Destinations-Based-On-Category",
+    "RelativePath": "Get-Destinations-Based-On-Category/{category}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "category",
-        "Type": "System.String",
-        "IsRequired": false
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -620,7 +620,7 @@
   {
     "ContainingType": "Pharaonia.Controllers.DestinationController",
     "Method": "UpdateDestinationAsync",
-    "RelativePath": "Update-Destination{DestinationID}",
+    "RelativePath": "Update-Destination/{DestinationID}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,

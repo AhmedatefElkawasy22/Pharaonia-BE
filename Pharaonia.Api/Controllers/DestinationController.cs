@@ -32,14 +32,23 @@ namespace Pharaonia.Controllers
         }
 
 
-        [AllowAnonymous, HttpGet("/Get-Destinations-Based-On-Category")]
-        public  async Task<IActionResult> GetBasedOnCategoryAsync([FromBody]Category category)
+        [AllowAnonymous, HttpGet("/Get-Destinations-Based-On-Category/{category:int}")]
+        public async Task<IActionResult> GetBasedOnCategoryAsync([FromRoute] int category)
         {
-            List<GetDestinationDTO> Response =await _destinationService.GetBasedOnCategoryAsync(category);
-            return Ok(Response);
+            // Validate if the provided integer is a valid enum value
+            if (!Enum.IsDefined(typeof(Category), category))
+            {
+                return BadRequest("Invalid category.");
+            }
+
+            // Convert the integer to the enum
+            var categoryEnum = (Category)category;
+
+            List<GetDestinationDTO> response = await _destinationService.GetBasedOnCategoryAsync(categoryEnum);
+            return Ok(response);
         }
 
-        
+
         [HttpGet("/Get-Images-Of-Destination/{DestinationID:int}")]
         public async Task<IActionResult> GetImagesOfDestinationAsync([FromRoute] int DestinationID)
         {
@@ -102,7 +111,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpPut("/Update-Destination{DestinationID:int}")]
+        [HttpPut("/Update-Destination/{DestinationID:int}")]
         public async Task<IActionResult> UpdateDestinationAsync([FromRoute]int DestinationID,[FromBody] UpdateDestinationDTO model)
         {
             if (!ModelState.IsValid)
@@ -119,7 +128,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpDelete("/Delete-Destination{DestinationID:int}")]
+        [HttpDelete("/Delete-Destination/{DestinationID:int}")]
         public async Task<IActionResult> DeleteDestinationAsync([FromRoute]int DestinationID)
         {
             var response = await _destinationService.DeleteDestinationAsync(DestinationID);

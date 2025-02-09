@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Pharaonia.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+90068151324bc6a98f088d524aa720f93749ba80")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e35ae6881fddbb8ef1b100b3e8d2fc207177cea6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Pharaonia.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Pharaonia.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
