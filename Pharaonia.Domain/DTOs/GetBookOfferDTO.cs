@@ -11,9 +11,9 @@
         public DateTime DepartureDate { get; set; }
         public int NumberOfAllPeople { get; set; }
         public int NumberOfChildren { get; set; }
-        public string? Requirements { get; set; }
+        public string Requirements { get; set; }
         public DateTime CreatedTime { get; set; }
-
-        public Offer Offer { get; set; }
+        public bool IsContacted { get; set; }
+        public int OfferId { get; set; }
     }
 }

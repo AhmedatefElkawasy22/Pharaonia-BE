@@ -11,6 +11,9 @@
         public string Phone { get; set; }
 
         public string Message { get; set; }
+
         public DateTime CreatedTime { get; set; }
+
+        public bool IsContacted { get; set; }
     }
 }

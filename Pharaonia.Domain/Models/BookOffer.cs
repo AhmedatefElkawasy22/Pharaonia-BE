@@ -29,9 +29,11 @@
         public int NumberOfChildren { get; set; }
 
         [MaxLength(3000)]
-        public string? Requirements { get; set; }
+        public string Requirements { get; set; }
 
         public DateTime CreatedTime { get; set; }
+
+        public bool IsContacted {  get; set; }
 
         [ForeignKey("Offer")]
         public int OfferId { get; set; }

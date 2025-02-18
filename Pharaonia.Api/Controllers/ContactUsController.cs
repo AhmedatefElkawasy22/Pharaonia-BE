@@ -71,5 +71,23 @@ namespace Pharaonia.API.Controllers
                 _ => StatusCode(500, "An unexpected error occurred, please try again."),
             };
         }
+
+        [HttpPut("/Mark-As-Contacted/{Id:int}")]
+        public async Task<IActionResult> MarkAsContactedAsync([FromRoute] int Id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _contactUsService.MarkAsContacted(Id);
+
+            return response.StatusCode switch
+            {
+                206 => StatusCode(206, response.Message),
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
     }
 }

@@ -24,7 +24,6 @@ namespace Pharaonia.API.Controllers
             return Ok(data);
         }
 
-
         [HttpPost("/Add-AboutUs")]
         public async Task<IActionResult> AddAboutUsAsync([FromBody] AboutUsDTO model)
         {
@@ -44,7 +43,7 @@ namespace Pharaonia.API.Controllers
         }
 
 
-        [HttpPost("/update-AboutUs")]
+        [HttpPut("/update-AboutUs")]
         public async Task<IActionResult> UpdateAboutUsAsync([FromBody] AboutUsDTO model)
         {
             if (!ModelState.IsValid)
@@ -63,7 +62,7 @@ namespace Pharaonia.API.Controllers
         }
 
 
-        [HttpPost("/Delete-AboutUs")]
+        [HttpDelete("/Delete-AboutUs")]
         public async Task<IActionResult> DeleteAboutUsAsync()
         {
             var response = await _aboutUsService.DeleteAboutUsAsync();

@@ -10,5 +10,8 @@ namespace Pharaonia.Domain.DTOs
         public string OfferDuration { get; set; }
         public DateTime ExpireOn { get; set; }
         public List<string> Images { get; set; }
+        public bool Expired { get; set; }
+        public string DurationOfExpiration { get; set; }
+
     }
 }

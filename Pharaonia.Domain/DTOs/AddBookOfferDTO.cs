@@ -23,10 +23,10 @@ namespace Pharaonia.Domain.DTOs
         [Required, DataType(DataType.Date)]
         public DateTime DepartureDate { get; set; }
 
-        [Required, Range(1, 5000)]
+        [Required, Range(1, 2000)]
         public int NumberOfAllPeople { get; set; }
 
-        [Required, Range(0, 5000)]
+        [Required, Range(0, 2000)]
         public int NumberOfChildren { get; set; }
 
         [MaxLength(3000)]

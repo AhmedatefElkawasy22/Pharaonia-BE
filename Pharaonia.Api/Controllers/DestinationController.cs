@@ -22,6 +22,18 @@ namespace Pharaonia.Controllers
         }
 
 
+        [AllowAnonymous,HttpGet("/Get-Destinations-Based-On-Number/{number:int}")]
+        public async Task<IActionResult> GetDestinationsBasedOnNumberAsync(int number)
+        { 
+            if (number < 1)
+              return BadRequest("enter a valid number.");
+            List<GetDestinationDTO> Response = await _destinationService.GetBasedOnNumberAsync(number);
+            if (Response == null)
+                return NotFound();
+            return Ok(Response);
+        }
+
+
         [AllowAnonymous, HttpGet("/Get-Destination-By-Id/{DestinationID:int}")]
         public  async Task<IActionResult> GetByIdAsync([FromRoute]int DestinationID)
         {
@@ -52,7 +64,7 @@ namespace Pharaonia.Controllers
         [HttpGet("/Get-Images-Of-Destination/{DestinationID:int}")]
         public async Task<IActionResult> GetImagesOfDestinationAsync([FromRoute] int DestinationID)
         {
-            List<string> images = await _destinationService.GetImagesOfDestinationAsync(DestinationID);
+            List<GetImageDTO> images = await _destinationService.GetImagesOfDestinationAsync(DestinationID);
             if (images is null)
                 return BadRequest("Destination not found or has no images.");
             return Ok(images);
@@ -142,5 +154,41 @@ namespace Pharaonia.Controllers
             };
         }
 
+
+        [HttpDelete("/Delete-Image-From-Destination/{ImageId:int}")]
+        public async Task<IActionResult> DeleteImageFromDestinationAsync([FromRoute] int ImageId)
+        {
+            if (ImageId <= 0)
+                return BadRequest("Invalid offer ID.");
+
+            var response = await _destinationService.DeleteImageFromDestinationAsync(ImageId);
+            return response.StatusCode switch
+            {
+                206 => StatusCode(206, response.Message),
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
+
+
+        [HttpDelete("/Delete-All-Image-From-Destination/{destinationId:int}")]
+        public async Task<IActionResult> DeleteAllImageFromDestinationAsync([FromRoute] int destinationId)
+        {
+            if (destinationId <= 0)
+                return BadRequest("Invalid offer ID.");
+
+            var response = await _destinationService.DeleteAllImageFromDestinationAsync(destinationId);
+
+            return response.StatusCode switch
+            {
+                206 => StatusCode(206, response.Message),
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
     }
 }

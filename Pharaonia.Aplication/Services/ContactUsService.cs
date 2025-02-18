@@ -26,7 +26,7 @@ namespace Pharaonia.Aplication.Services
         public async Task<ResponseModel> DeleteAsync(int id)
         {
             try
-            { 
+            {
                 var old = await GetByIdAsync(id);
                 if (old == null)
                     return new ResponseModel { Message = "Not found this ContactUs.", StatusCode = 400 };
@@ -53,6 +53,23 @@ namespace Pharaonia.Aplication.Services
             if (data == null)
                 return null;
             return data;
+        }
+
+        public async Task<ResponseModel> MarkAsContacted(int id)
+        {
+            try
+            {
+                var contact = await GetByIdAsync(id);
+                if (contact == null)
+                    return new ResponseModel { Message = "Not found this ContactUs.", StatusCode = 400 };
+                contact.IsContacted = true;
+                await _unitOfWork.SaveChangesAsync();
+                return new ResponseModel { Message = "He was marked as having been successfully contacted.", StatusCode = 200 };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel { StatusCode = 500, Message = $"An error occurred while Mark As Contacted: {ex.Message}" };
+            }
         }
     }
 }

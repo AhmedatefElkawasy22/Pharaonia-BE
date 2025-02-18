@@ -52,6 +52,24 @@ namespace Pharaonia.Aplication.Services
             return destinationDTO;
         }
 
+        public async Task<List<GetDestinationDTO>> GetBasedOnNumberAsync(int number)
+        {
+            var includes = new List<Expression<Func<Destination, object>>> { i => i.Images };
+
+            var destinations = await _unitOfWork.Destinations.GetBasedOnNumber(number,null,includes);
+
+            if (destinations == null)
+                return new List<GetDestinationDTO>();
+
+            return destinations.Select(destination => new GetDestinationDTO
+            {
+                Id = destination.Id,
+                Description = destination.Description,
+                DestinationCategory = destination.DestinationCategory.ToString(),
+                Name = destination.Name,
+                ImagePath = destination.Images.Select(i => i.ImagePath).ToList()
+            }).ToList();
+        }
         public async Task<ResponseModel> AddDestinationAsync(AddDestinationDTO model)
         {
             try
@@ -174,15 +192,15 @@ namespace Pharaonia.Aplication.Services
             }
         }
 
-        public async Task<List<string>> GetImagesOfDestinationAsync(int DestinationID)
+        public async Task<List<GetImageDTO>> GetImagesOfDestinationAsync(int DestinationID)
         {
             var includes = new List<Expression<Func<Destination, object>>> { o => o.Images };
             Expression<Func<Destination, bool>> match = o => o.Id == DestinationID;
             var destination = await _unitOfWork.Destinations.GetOneAsync(match, includes);
             if (destination is null)
-                return new List<string>();
+                return new List<GetImageDTO>();
 
-            return destination.Images.Select(i => i.ImagePath).ToList();
+            return destination.Images.Select(i => new GetImageDTO { Id = i.Id, Path = i.ImagePath }).ToList();
         }
 
         public async Task<ResponseModel> UpdateImagesOfDestinationAsync(int DestinationID, List<IFormFile> images)
@@ -216,6 +234,71 @@ namespace Pharaonia.Aplication.Services
             }
         }
 
+        public async Task<ResponseModel> DeleteImageFromDestinationAsync(int ImageID)
+        {
+            try
+            {
+                Expression<Func<DestinationImages, bool>> match = i => i.Id == ImageID;
+                var image = await _unitOfWork.DestinationImages.GetOneAsync(match);
+                if (image == null)
+                    return new ResponseModel { Message = "This image does not exist.", StatusCode = 400 };
+
+                string oldImagePath = Path.Combine("wwwroot", "Images_of_Destination", Path.GetFileName(image.ImagePath));
+                if (File.Exists(oldImagePath))
+                    File.Delete(oldImagePath);
+
+                _unitOfWork.DestinationImages.Remove(image);
+                await _unitOfWork.SaveChangesAsync();
+
+                return new ResponseModel
+                {
+                    Message = "Image has been deleted successfully.",
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = 500,
+                    Message = $"An error occurred while deleting the image: {ex.Message}"
+                };
+            }
+        }
+
+        public async Task<ResponseModel> DeleteAllImageFromDestinationAsync(int DestinationID)
+        {
+            try
+            {
+                Expression<Func<Destination, bool>> match = o => o.Id == DestinationID;
+                var includes = new List<Expression<Func<Destination, object>>>() { i => i.Images };
+                var destination = await _unitOfWork.Destinations.GetOneAsync(match, includes);
+                if (destination == null)
+                    return new ResponseModel { Message = "This Destination does not exist.", StatusCode = 400 };
+                foreach (var image in destination.Images)
+                {
+                    string oldImagePath = Path.Combine("wwwroot", "Images_of_Destination", Path.GetFileName(image.ImagePath));
+                    if (File.Exists(oldImagePath))
+                        File.Delete(oldImagePath);
+                }
+                _unitOfWork.DestinationImages.RemoveRange(destination.Images);
+                await _unitOfWork.SaveChangesAsync();
+
+                return new ResponseModel
+                {
+                    Message = "Images has been deleted successfully.",
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseModel
+                {
+                    StatusCode = 500,
+                    Message = $"An error occurred while deleting the images: {ex.Message}"
+                };
+            }
+        }
 
         private async Task<ResponseModel> AddImageAsync(Destination destination, List<IFormFile> images)
         {
@@ -270,6 +353,6 @@ namespace Pharaonia.Aplication.Services
 
         }
 
-
+      
     }
 }

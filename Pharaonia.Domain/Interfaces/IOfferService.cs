@@ -9,9 +9,10 @@ namespace Pharaonia.Domain.Interfaces
         Task<ResponseModel> AddOfferAsync(AddOfferDTO model);
         Task<ResponseModel> UpdateOfferAsync(int offerId, UpdateOfferDTO model);
         Task<List<GetOfferDTO>> GetAvailableOffersAsync();
+        Task<List<GetOfferDTO>> GetAvailableOffersBasedOnNumberAsync(int number);
         Task<List<GetOfferDTO>> GetOffersExpiredAsync();
         Task<ResponseModel> ReactivateOfferAsync(int OfferID);
-        Task<List<string>> GetImagesOfOfferAsync(int OfferID);
+        Task<List<GetImageDTO>> GetImagesOfOfferAsync(int OfferID);
         Task<ResponseModel> AddImagesToOfferAsync(int OfferID, List<IFormFile> images);
         Task<ResponseModel> UpdateImagesOfOfferAsync(int OfferID, List<IFormFile> images);
         Task<ResponseModel> DeleteImageFromOfferAsync(int ImageID);
@@ -21,6 +22,8 @@ namespace Pharaonia.Domain.Interfaces
         Task<List<GetBookOfferDTO>?> GetAllBookingsAsync();
         Task<List<GetBookOfferDTO>?> GetAllBookingsByOfferIdAsync(int OfferID);
         Task<GetBookOfferDTO?> GetBookOfferByIDAsync(int BookOfferID);
+        Task<ResponseModel> MarkOnBookOfferIsContactedAsync(int BookOfferID);
+        Task<ResponseModel> DeleteBookOfferAsync(int BookOfferID);
 
     }
 }

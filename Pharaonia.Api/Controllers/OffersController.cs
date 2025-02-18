@@ -1,4 +1,6 @@
 ﻿
+using Pharaonia.Domain.Models;
+
 namespace Pharaonia.Controllers
 {
     [Authorize(Roles = "Admin"), Route("api/[controller]")]
@@ -22,11 +24,22 @@ namespace Pharaonia.Controllers
             return Ok(offers);
         }
 
-
         [AllowAnonymous,HttpGet("/Get-All-Offers-Available")]
         public async Task<IActionResult> GetAvailableOffersAsync()
         {
             var offers = await _offerService.GetAvailableOffersAsync();
+            if (offers == null)
+                return NotFound();
+            return Ok(offers);
+        }
+
+        [AllowAnonymous, HttpGet("/Get-Offers-Available-Based-On-Number/{number:int}")]
+        public async Task<IActionResult> GetOffersAvailableBasedOnNumberAsync(int number)
+        {
+            if (number < 1)
+                return BadRequest("enter a valid number.");
+
+            var offers = await _offerService.GetAvailableOffersBasedOnNumberAsync(number);
             if (offers == null)
                 return NotFound();
             return Ok(offers);
@@ -63,7 +76,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpGet("/Reactivate-Offer/{offerId:int}")]
+        [HttpPut("/Reactivate-Offer/{offerId:int}")]
         public async Task<IActionResult> ReactivateOfferAsync([FromRoute] int offerId)
         {
             if (offerId <= 0)
@@ -219,7 +232,7 @@ namespace Pharaonia.Controllers
 
 
         // Book offer
-        [HttpGet("Get-All-Bookings")]
+        [HttpGet("/Get-All-Bookings")]
         public async Task<IActionResult> GetAllBookingsAsync()
         {
             var res = await _offerService.GetAllBookingsAsync();
@@ -229,7 +242,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpGet("Get-All-Bookings-By-OfferId/{OfferId:int}")]
+        [HttpGet("/Get-All-Bookings-By-OfferId/{OfferId:int}")]
         public async Task<IActionResult> GetAllBookingsByOfferIdAsync([FromRoute] int OfferId)
         {
             if (OfferId <= 0)
@@ -241,7 +254,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [HttpGet("Get-Book-Offer-By-ID/{Id:int}")]
+        [HttpGet("/Get-Booking-Offer-By-ID/{Id:int}")]
         public async Task<IActionResult> GetBookOfferByIDAsync([FromRoute] int Id)
         {
             if (Id <= 0)
@@ -253,7 +266,7 @@ namespace Pharaonia.Controllers
         }
 
 
-        [AllowAnonymous, HttpPost("Add-Book-Offer/{OfferId:int}")]
+        [AllowAnonymous, HttpPost("/Add-Book-Offer/{OfferId:int}")]
         public async Task<IActionResult> AddBookOfferAsync([FromRoute] int OfferId, [FromBody] AddBookOfferDTO model)
         {
             if (OfferId <= 0)
@@ -264,6 +277,40 @@ namespace Pharaonia.Controllers
             return response.StatusCode switch
             {
                 206 => StatusCode(206, response.Message),
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
+
+        [HttpPut("/Mark-On-Book-Offer-Is-Contacted/{Id:int}")]
+        public async Task<IActionResult> MarkOnBookOfferIsContactedAsync([FromRoute]int Id)
+        {
+            if (Id <= 0)
+                return BadRequest("Invalid ID.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var response = await _offerService.MarkOnBookOfferIsContactedAsync(Id);
+            return response.StatusCode switch
+            {
+                400 => BadRequest(response.Message),
+                200 => Ok(response.Message),
+                500 => StatusCode(500, response.Message),
+                _ => StatusCode(500, "An unexpected error occurred, please try again."),
+            };
+        }
+
+        [HttpDelete("/Delete-book-offer/{Id:int}")]
+        public async Task<IActionResult> DeleteBookOfferAsync([FromRoute] int Id)
+        {
+            if (Id <= 0)
+                return BadRequest("Invalid ID.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var response = await _offerService.DeleteBookOfferAsync(Id);
+            return response.StatusCode switch
+            {
                 400 => BadRequest(response.Message),
                 200 => Ok(response.Message),
                 500 => StatusCode(500, response.Message),

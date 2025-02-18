@@ -12,14 +12,14 @@ namespace Pharaonia.API.Controllers
             _galleryService = galleryService;
         }
 
-        [AllowAnonymous, HttpGet("/Get-All")]
+        [AllowAnonymous, HttpGet("Get-All")]
         public async Task<IActionResult> GetAllAsync()
         {
             return Ok(await _galleryService.GetAllAsync());
         }
 
 
-        [AllowAnonymous,HttpGet("/Get-By-Id/{Id:int}")]
+        [AllowAnonymous,HttpGet("Get-By-Id/{Id:int}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int Id)
         {
             var Image = await _galleryService.GetByIdAsync(Id);

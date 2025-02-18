@@ -1,7 +1,4 @@
-﻿using Pharaonia.Domain.DTOs;
-using Pharaonia.Domain.Models;
-using System;
-using System.Text.RegularExpressions;
+﻿
 
 namespace Pharaonia.Aplication.Services
 {
@@ -10,12 +7,14 @@ namespace Pharaonia.Aplication.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUrlHelperService _urlHelperService;
         private readonly IEmailSender _emailSender;
+        private readonly UserManager<User> _userManager;
 
-        public OfferService(IUnitOfWork unitOfWork, IUrlHelperService urlHelperService, IEmailSender emailSender)
+        public OfferService(IUnitOfWork unitOfWork, IUrlHelperService urlHelperService, IEmailSender emailSender, UserManager<User> userManager)
         {
             _unitOfWork = unitOfWork;
             _urlHelperService = urlHelperService;
             _emailSender = emailSender;
+            _userManager = userManager;
         }
 
         public async Task<List<GetOfferDTO>> GetAllOffersAsync()
@@ -31,7 +30,29 @@ namespace Pharaonia.Aplication.Services
                 ExpireOn = e.ExpireOn,
                 NameOfDestination = e.NameOfDestination,
                 OfferDuration = $"{e.OfferDurationNumber} {(e.TypeOfOfferDuration == TypeOfTime.day ? "Days" : "Hours")}",
-                Images = e.Images.Select(e => e.ImagePath).ToList()
+                Images = e.Images.Select(e => e.ImagePath).ToList(),
+                DurationOfExpiration = $"{e.OfferExpirationNumber} {(e.TypeOfOfferExpirationDate == TypeOfTime.day ? "Days" : "Hours")}",
+                Expired = e.ExpireOn < DateTime.Now
+            }).ToList();
+        }
+
+        public async Task<List<GetOfferDTO>> GetAvailableOffersBasedOnNumberAsync(int number)
+        {
+            Expression<Func<Offer, bool>> match = o => o.ExpireOn >= DateTime.Now;
+            var includes = new List<Expression<Func<Offer, object>>> { o => o.Images };
+            var offers = await _unitOfWork.Offers.GetBasedOnNumber(number, match, includes);
+
+            return offers.Select(e => new GetOfferDTO
+            {
+                Id = e.Id,
+                Description = e.Description,
+                Price = e.Price,
+                ExpireOn = e.ExpireOn,
+                NameOfDestination = e.NameOfDestination,
+                OfferDuration = $"{e.OfferDurationNumber} {(e.TypeOfOfferDuration == TypeOfTime.day ? "Days" : "Hours")}",
+                Images = e.Images.Select(e => e.ImagePath).ToList(),
+                DurationOfExpiration = $"{e.OfferExpirationNumber} {(e.TypeOfOfferExpirationDate == TypeOfTime.day ? "Days" : "Hours")}",
+                Expired = false,
             }).ToList();
         }
 
@@ -52,7 +73,9 @@ namespace Pharaonia.Aplication.Services
                 ExpireOn = offer.ExpireOn,
                 NameOfDestination = offer.NameOfDestination,
                 OfferDuration = $"{offer.OfferDurationNumber} {(offer.TypeOfOfferDuration == TypeOfTime.day ? "Days" : "Hours")}",
-                Images = offer.Images.Select(e => e.ImagePath).ToList()
+                Images = offer.Images.Select(e => e.ImagePath).ToList(),
+                DurationOfExpiration = $"{offer.OfferExpirationNumber} {(offer.TypeOfOfferExpirationDate == TypeOfTime.day ? "Days" : "Hours")}",
+                Expired = offer.ExpireOn < DateTime.Now
             };
         }
 
@@ -149,7 +172,7 @@ namespace Pharaonia.Aplication.Services
 
         public async Task<List<GetOfferDTO>> GetAvailableOffersAsync()
         {
-            Expression<Func<Offer, bool>> match = o => o.ExpireOn > DateTime.Now;
+            Expression<Func<Offer, bool>> match = o => o.ExpireOn >= DateTime.Now;
             var includes = new List<Expression<Func<Offer, object>>>() { i => i.Images };
             var offers = await _unitOfWork.Offers.GetAllAsync(includes, match);
             if (offers is null)
@@ -163,20 +186,22 @@ namespace Pharaonia.Aplication.Services
                 ExpireOn = o.ExpireOn,
                 NameOfDestination = o.NameOfDestination,
                 OfferDuration = $"{o.OfferDurationNumber} {(o.TypeOfOfferDuration == TypeOfTime.day ? "Days" : "Hours")}",
-                Images = o.Images.Select(img => img.ImagePath).ToList()
+                Images = o.Images.Select(img => img.ImagePath).ToList(),
+                DurationOfExpiration = $"{o.OfferExpirationNumber} {(o.TypeOfOfferExpirationDate == TypeOfTime.day ? "Days" : "Hours")}",
+                Expired = false
             })
            .ToList();
         }
 
-        public async Task<List<string>> GetImagesOfOfferAsync(int OfferID)
+        public async Task<List<GetImageDTO>> GetImagesOfOfferAsync(int OfferID)
         {
             Expression<Func<Offer, bool>> match = o => o.Id == OfferID;
             var includes = new List<Expression<Func<Offer, object>>>() { i => i.Images };
             var offer = await _unitOfWork.Offers.GetOneAsync(match, includes);
             if (offer is null)
-                return new List<string>();
+                return new List<GetImageDTO>();
 
-            return offer.Images.Select(img => img.ImagePath).ToList();
+            return offer.Images.Select(img => new GetImageDTO { Id = img.Id, Path = img.ImagePath }).ToList();
         }
 
         public async Task<List<GetOfferDTO>> GetOffersExpiredAsync()
@@ -195,7 +220,9 @@ namespace Pharaonia.Aplication.Services
                 ExpireOn = o.ExpireOn,
                 NameOfDestination = o.NameOfDestination,
                 OfferDuration = $"{o.OfferDurationNumber} {(o.TypeOfOfferDuration == TypeOfTime.day ? "Days" : "Hours")}",
-                Images = o.Images.Select(img => img.ImagePath).ToList()
+                Images = o.Images.Select(img => img.ImagePath).ToList(),
+                DurationOfExpiration = $"{o.OfferExpirationNumber} {(o.TypeOfOfferExpirationDate == TypeOfTime.day ? "Days" : "Hours")}",
+                Expired = true
             })
           .ToList();
         }
@@ -388,10 +415,15 @@ namespace Pharaonia.Aplication.Services
 
         }
 
+      
+
 
         // Book Offer
         public async Task<ResponseModel> AddBookOfferAsync(AddBookOfferDTO model, int offerID)
         {
+            var offer = await GetOfferByIdAsync(offerID);
+            if (offer == null)
+                return new ResponseModel { Message = "this offer not found.", StatusCode = 400 };
             try
             {
                 var bookOffer = new BookOffer
@@ -406,18 +438,20 @@ namespace Pharaonia.Aplication.Services
                     NumberOfChildren = model.NumberOfChildren,
                     OfferId = offerID,
                     PhoneNumber = model.PhoneNumber,
-                    Requirements = model.Requirements
+                    Requirements = model.Requirements,
+                    IsContacted = false
                 };
                 await _unitOfWork.BookOffer.AddAsync(bookOffer);
                 await _unitOfWork.SaveChangesAsync();
                 try
                 {
-                    var emailSubject = "New Book Offer Notification";
-                    var emailBody = GenerateBookOfferEmailBody(bookOffer);
-                    //send email to admin
-                    await _emailSender.SendEmailAsync("elkawasyahmed@gmail.com", emailSubject, emailBody);
+
+                    //send email to All admins
+                    var emails = await _userManager.Users.Where(e => e.Email != null && e.EmailConfirmed == true).Select(e => e.Email).ToListAsync();
+                    foreach (var email in emails)
+                        await _emailSender.SendEmailAsync(email, "New Book Offer Notification", GenerateBookOfferEmailBody(bookOffer, offer));
                     //send email to user 
-                    await _emailSender.SendEmailAsync( bookOffer.Email,"Booking Confirmation - Pharaonia", GenerateBookingConfirmationEmailBody(bookOffer));
+                    await _emailSender.SendEmailAsync(bookOffer.Email, "Booking Confirmation - Pharaonia", GenerateBookingConfirmationEmailBody(bookOffer, offer));
                 }
                 catch (Exception ex)
                 {
@@ -444,12 +478,11 @@ namespace Pharaonia.Aplication.Services
         }
         public async Task<List<GetBookOfferDTO>?> GetAllBookingsAsync()
         {
-            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
-            var data = await _unitOfWork.BookOffer.GetAllAsync(includes);
+            var data = await _unitOfWork.BookOffer.GetAllAsync();
             if (data == null || !data.Any())
                 return null;
 
-            return data.Select(b => new GetBookOfferDTO
+            return data.OrderBy(b => b.CreatedTime).Select(b => new GetBookOfferDTO
             {
                 Id = b.Id,
                 Name = b.Name,
@@ -462,18 +495,19 @@ namespace Pharaonia.Aplication.Services
                 NumberOfChildren = b.NumberOfChildren,
                 Requirements = b.Requirements,
                 CreatedTime = b.CreatedTime,
-                Offer = b.Offer
+                OfferId=b.OfferId,
+                IsContacted = b.IsContacted,
+                
             }).ToList();
         }
         public async Task<List<GetBookOfferDTO>?> GetAllBookingsByOfferIdAsync(int OfferID)
         {
             Expression<Func<BookOffer, bool>> match = b => b.OfferId == OfferID;
-            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
-            var data = await _unitOfWork.BookOffer.GetAllAsync(includes, match);
+            var data = await _unitOfWork.BookOffer.GetAllAsync(null,match);
             if (data == null || !data.Any())
                 return null;
 
-            return data.Select(b => new GetBookOfferDTO
+            return data.OrderBy(b => b.CreatedTime).Select(b => new GetBookOfferDTO
             {
                 Id = b.Id,
                 Name = b.Name,
@@ -486,14 +520,14 @@ namespace Pharaonia.Aplication.Services
                 NumberOfChildren = b.NumberOfChildren,
                 Requirements = b.Requirements,
                 CreatedTime = b.CreatedTime,
-                Offer = b.Offer
+                OfferId = b.OfferId,
+                IsContacted = b.IsContacted,
             }).ToList();
         }
         public async Task<GetBookOfferDTO?> GetBookOfferByIDAsync(int BookOfferID)
         {
             Expression<Func<BookOffer, bool>> match = b => b.Id == BookOfferID;
-            var includes = new List<Expression<Func<BookOffer, object>>> { b => b.Offer };
-            var data = await _unitOfWork.BookOffer.GetOneAsync(match, includes);
+            var data = await _unitOfWork.BookOffer.GetOneAsync(match);
             if (data == null)
                 return null;
 
@@ -510,10 +544,33 @@ namespace Pharaonia.Aplication.Services
                 NumberOfChildren = data.NumberOfChildren,
                 Requirements = data.Requirements,
                 CreatedTime = data.CreatedTime,
-                Offer = data.Offer
+                OfferId = data.OfferId,
+                IsContacted = data.IsContacted,
             };
         }
-        private string GenerateBookOfferEmailBody(BookOffer bookOffer)
+        public async Task<ResponseModel> MarkOnBookOfferIsContactedAsync(int BookOfferID)
+        {
+            Expression<Func<BookOffer, bool>> match = b => b.Id == BookOfferID;
+            var res = await _unitOfWork.BookOffer.GetOneAsync(match);
+            if (res == null)
+                return new ResponseModel { StatusCode = 400, Message = "Not found Book the offer." };
+
+            res.IsContacted = true;
+            await _unitOfWork.SaveChangesAsync();
+            return new ResponseModel { StatusCode = 200, Message = "Successfully completed." };
+        }
+        public async Task<ResponseModel> DeleteBookOfferAsync(int BookOfferID)
+        {
+            Expression<Func<BookOffer, bool>> match = b => b.Id == BookOfferID;
+            var res = await _unitOfWork.BookOffer.GetOneAsync(match);
+            if (res == null)
+                return new ResponseModel { StatusCode = 400, Message = "Not found Book the offer." };
+            _unitOfWork.BookOffer.Remove(res);
+            await _unitOfWork.SaveChangesAsync();
+            return new ResponseModel { StatusCode = 200, Message = "Booking the offer has been deleted successfully." };
+
+        }
+        private string GenerateBookOfferEmailBody(BookOffer bookOffer, GetOfferDTO offer)
         {
             return $@"
         <div style='font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;'>
@@ -523,6 +580,8 @@ namespace Pharaonia.Aplication.Services
                 </div>
                 <div style='padding: 20px; line-height: 1.6;'>
                     <p style='font-size: 18px; color: #555;'><strong>Name:</strong> <span style='color: #333;'>{bookOffer.Name}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Offer:</strong> <span style='color: #333;'>{offer.NameOfDestination}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>price of offer:</strong> <span style='color: #333;'>{offer.Price}$</span></p>
                     <p style='font-size: 18px; color: #555;'><strong>Email:</strong> <span style='color: #333;'>{bookOffer.Email}</span></p>
                     <p style='font-size: 18px; color: #555;'><strong>Nationality:</strong> <span style='color: #333;'>{bookOffer.Nationality}</span></p>
                     <p style='font-size: 18px; color: #555;'><strong>Phone Number:</strong> <span style='color: #333;'>{bookOffer.PhoneNumber}</span></p>
@@ -532,10 +591,10 @@ namespace Pharaonia.Aplication.Services
                     <p style='font-size: 18px; color: #555;'><strong>Number of Children:</strong> <span style='color: #333;'>{bookOffer.NumberOfChildren}</span></p>
                     <p style='font-size: 18px; color: #555;'><strong>Requirements:</strong></p>
                     <p style='background: #f9f9f9; border-left: 4px solid #4caf50; padding: 10px; font-size: 16px; color: #666;'>{bookOffer.Requirements}</p>
-                    <p style='font-size: 18px; color: #555;'><strong>offer booking time:</strong> <span style='color: #333;'>{bookOffer.CreatedTime:yyyy-MM-dd HH:mm}</span></p>
+                    <p style='font-size: 18px; color: #555;'><strong>Time of booking:</strong> <span style='color: #333;'>{bookOffer.CreatedTime:yyyy-MM-dd HH:mm}</span></p>
                 </div>
                 <div style='padding: 10px; text-align: center; background: #4caf50; color: #ffffff; font-size: 14px;'>
-                    <p style='margin: 0;'>Thank you for using our service!</p>
+                    <p style='margin: 0;'>Thank you , The client is waiting for you to contact him.</p>
                 </div>
             </div>
         </div>
@@ -547,7 +606,7 @@ namespace Pharaonia.Aplication.Services
         </style>
     ";
         }
-        private string GenerateBookingConfirmationEmailBody(BookOffer bookOffer)
+        private string GenerateBookingConfirmationEmailBody(BookOffer bookOffer, GetOfferDTO offer)
         {
             return $@"
         <div style='font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd;'>
@@ -564,6 +623,8 @@ namespace Pharaonia.Aplication.Services
                         <li style='font-size: 16px; color: #555;'>Departure Date: <span style='color: #333;'>{bookOffer.DepartureDate:yyyy-MM-dd}</span></li>
                         <li style='font-size: 16px; color: #555;'>Number of People: <span style='color: #333;'>{bookOffer.NumberOfAllPeople}</span></li>
                         <li style='font-size: 16px; color: #555;'>Number of Children: <span style='color: #333;'>{bookOffer.NumberOfChildren}</span></li>
+                        <li style='font-size: 16px; color: #555;'>offer : <span style='color: #333;'>{offer.NameOfDestination}</span></li>
+                        <li style='font-size: 16px; color: #555;'>price : <span style='color: #333;'>{offer.Price}$</span></li>
                     </ul>
                     <p style='font-size: 18px; color: #555;'>If you have any questions or need further assistance, feel free to contact us.</p>
                     <p style='font-size: 18px; color: #333;'>Thank you for choosing <strong>Pharaonia</strong>!</p>
@@ -581,6 +642,5 @@ namespace Pharaonia.Aplication.Services
         </style>
     ";
         }
-
     }
 }

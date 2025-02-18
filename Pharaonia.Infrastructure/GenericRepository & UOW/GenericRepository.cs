@@ -37,6 +37,26 @@ namespace Pharaonia.Infrastructure.GenericRepository___UOW
             }
             return null;
         }
+
+        public async Task<IEnumerable<T>> GetBasedOnNumber(
+            int number,
+            Expression<Func<T, bool>> match = null,
+            List<Expression<Func<T, object>>> includes = null)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            if (includes != null)
+                foreach (var include in includes)
+                    query = query.Include(include);
+            if (match != null)
+                query = query.Where(match);
+
+            query = query.Take(number); 
+
+            return await query.ToListAsync();
+        }
+
+
         public async Task<T?> FirstAsync(Expression<Func<T, bool>> match = null)
         {
             IQueryable<T> query = _context.Set<T>();
@@ -44,6 +64,7 @@ namespace Pharaonia.Infrastructure.GenericRepository___UOW
                 query = query.Where(match);
             return await query.FirstOrDefaultAsync();
         }
+
         public async Task AddAsync(T entity)
         {
             await _context.Set<T>().AddAsync(entity);

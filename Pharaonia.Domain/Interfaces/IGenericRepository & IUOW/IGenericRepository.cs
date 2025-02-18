@@ -7,10 +7,12 @@ namespace Pharaonia.Domain.Interfaces.IGenericRepository___IUOW
     {
         Task<IEnumerable<T>> GetAllAsync(List<Expression<Func<T, object>>> includes = null, Expression<Func<T, bool>> match = null);
         Task<T?> GetOneAsync(Expression<Func<T, bool>> match ,List<Expression<Func<T, object>>> includes = null);
+        Task<IEnumerable<T>> GetBasedOnNumber(int number,Expression<Func<T, bool>> match = null, List<Expression<Func<T, object>>> includes = null);
         Task<T?> FirstAsync(Expression<Func<T, bool>> match = null);
         Task AddAsync(T entity);
         void Update(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entity);
+
     }
 }

@@ -16,6 +16,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Pharaonia.Controllers.OffersController",
+    "Method": "AddBookOfferAsync",
+    "RelativePath": "Add-Book-Offer/{OfferId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OfferId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Pharaonia.Domain.DTOs.AddBookOfferDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Pharaonia.API.Controllers.ContactUsController",
     "Method": "AddAsync",
     "RelativePath": "Add-ContactUS",
@@ -156,6 +177,54 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Pharaonia.API.Controllers.AccountController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/Account/Forgot-Password/{email}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.API.Controllers.AccountController",
+    "Method": "ResetPassword",
+    "RelativePath": "api/Account/Reset-Password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Pharaonia.Domain.DTOs.ResetPasswordDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.API.Controllers.AccountController",
+    "Method": "VerifyOTP",
+    "RelativePath": "api/Account/Verify-Otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Pharaonia.Domain.DTOs.VerifyOTPDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Pharaonia.API.Controllers.GalleryController",
     "Method": "AddImagesAsync",
     "RelativePath": "api/Gallery/Add-Images",
@@ -198,30 +267,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pharaonia.Controllers.OffersController",
-    "Method": "AddBookOfferAsync",
-    "RelativePath": "api/Offers/Add-Book-Offer/{OfferId}",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "OfferId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "model",
-        "Type": "Pharaonia.Domain.DTOs.AddBookOfferDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Pharaonia.Controllers.OffersController",
-    "Method": "GetAllBookingsAsync",
-    "RelativePath": "api/Offers/Get-All-Bookings",
+    "ContainingType": "Pharaonia.API.Controllers.GalleryController",
+    "Method": "GetAllAsync",
+    "RelativePath": "api/Gallery/Get-All",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -229,25 +277,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pharaonia.Controllers.OffersController",
-    "Method": "GetAllBookingsByOfferIdAsync",
-    "RelativePath": "api/Offers/Get-All-Bookings-By-OfferId/{OfferId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "OfferId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Pharaonia.Controllers.OffersController",
-    "Method": "GetBookOfferByIDAsync",
-    "RelativePath": "api/Offers/Get-Book-Offer-By-ID/{Id}",
+    "ContainingType": "Pharaonia.API.Controllers.GalleryController",
+    "Method": "GetByIdAsync",
+    "RelativePath": "api/Gallery/Get-By-Id/{Id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -285,10 +317,26 @@
     "ContainingType": "Pharaonia.API.Controllers.AboutUsController",
     "Method": "DeleteAboutUsAsync",
     "RelativePath": "Delete-AboutUs",
-    "HttpMethod": "POST",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.Controllers.DestinationController",
+    "Method": "DeleteAllImageFromDestinationAsync",
+    "RelativePath": "Delete-All-Image-From-Destination/{destinationId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "destinationId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -340,6 +388,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Pharaonia.Controllers.DestinationController",
+    "Method": "DeleteImageFromDestinationAsync",
+    "RelativePath": "Delete-Image-From-Destination/{ImageId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ImageId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Pharaonia.Controllers.OffersController",
     "Method": "DeleteImageFromOfferAsync",
     "RelativePath": "Delete-Image-From-Offer/{ImageId}",
@@ -382,13 +446,29 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pharaonia.API.Controllers.GalleryController",
-    "Method": "GetAllAsync",
-    "RelativePath": "Get-All",
+    "ContainingType": "Pharaonia.Controllers.OffersController",
+    "Method": "GetAllBookingsAsync",
+    "RelativePath": "Get-All-Bookings",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.Controllers.OffersController",
+    "Method": "GetAllBookingsByOfferIdAsync",
+    "RelativePath": "Get-All-Bookings-By-OfferId/{OfferId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OfferId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -432,9 +512,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Pharaonia.API.Controllers.GalleryController",
-    "Method": "GetByIdAsync",
-    "RelativePath": "Get-By-Id/{Id}",
+    "ContainingType": "Pharaonia.Controllers.OffersController",
+    "Method": "GetBookOfferByIDAsync",
+    "RelativePath": "Get-Booking-Offer-By-ID/{Id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -497,6 +577,22 @@
   },
   {
     "ContainingType": "Pharaonia.Controllers.DestinationController",
+    "Method": "GetDestinationsBasedOnNumberAsync",
+    "RelativePath": "Get-Destinations-Based-On-Number/{number}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.Controllers.DestinationController",
     "Method": "GetImagesOfDestinationAsync",
     "RelativePath": "Get-Images-Of-Destination/{DestinationID}",
     "HttpMethod": "GET",
@@ -545,6 +641,22 @@
   },
   {
     "ContainingType": "Pharaonia.Controllers.OffersController",
+    "Method": "GetOffersAvailableBasedOnNumberAsync",
+    "RelativePath": "Get-Offers-Available-Based-On-Number/{number}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Pharaonia.Controllers.OffersController",
     "Method": "GetOffersExpiredAsync",
     "RelativePath": "Get-Offers-Expired",
     "HttpMethod": "GET",
@@ -570,10 +682,26 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Pharaonia.API.Controllers.ContactUsController",
+    "Method": "MarkAsContactedAsync",
+    "RelativePath": "Mark-As-Contacted/{Id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Pharaonia.Controllers.OffersController",
     "Method": "ReactivateOfferAsync",
     "RelativePath": "Reactivate-Offer/{offerId}",
-    "HttpMethod": "GET",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -605,7 +733,7 @@
     "ContainingType": "Pharaonia.API.Controllers.AboutUsController",
     "Method": "UpdateAboutUsAsync",
     "RelativePath": "update-AboutUs",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [

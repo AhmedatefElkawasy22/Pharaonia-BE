@@ -7,7 +7,7 @@
         public string NameOfDestination { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
-        [StringLength(500, ErrorMessage = "Description must not exceed 500 characters")]
+        [StringLength(1000, ErrorMessage = "Description must not exceed 1000 characters")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Price is required")]

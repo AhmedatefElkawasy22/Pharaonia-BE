@@ -201,6 +201,11 @@ namespace Pharaonia.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsContacted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -225,6 +230,7 @@ namespace Pharaonia.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Requirements")
+                        .IsRequired()
                         .HasMaxLength(3000)
                         .HasColumnType("nvarchar(3000)");
 
@@ -249,6 +255,11 @@ namespace Pharaonia.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsContacted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Message")
                         .IsRequired()
